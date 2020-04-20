@@ -9,6 +9,16 @@ const port = 3000;
 
 app.use(logger('dev'));
 app.use('/thingy', thingyRoute);
+
+// built-in error handling
+// NOTE: must be the last piece of middleware in stack
+//https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
